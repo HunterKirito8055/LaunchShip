@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 1274907059
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7c655c7761b0b23e614fa979eff15cb4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Audio Sounds/BackgroundMusic.mp3
+- Assets/Audio Sounds/16 - The Lion Sleeps Tonight (Full Version) - Musicmingo.Com.mp3
+- Assets/Audio Sounds/Shoot.wav
+- Assets/Audio Sounds/coin.ogg
+Dependencies: []

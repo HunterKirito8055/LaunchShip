@@ -477,6 +477,7 @@ public class UIManager : MonoBehaviour
 }
 public enum EUI_PANEL
 {
+    loadingLevelE,
     hudE,
     mainMenuE,
     settingsE,

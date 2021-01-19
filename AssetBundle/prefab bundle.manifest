@@ -1,0 +1,177 @@
+ManifestFileVersion: 0
+CRC: 2386125681
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: de8a3ac9bfc4fa57f98ab312e4a96961
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 20906374b4b54be8bd64e497181cbed6
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 54
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 82
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 84
+  Script: {instanceID: 0}
+- Class: 102
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f2fa4f505d2f2f64eaf291be0b8d34a9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: addb5990aaabe42409bade592b72c5b5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d57fc1f0b9ff3bd43880cd1d97f6d478, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2ce9c081b3adaef4ea141b59a42226b6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b7e76d2273b2c8448abfbb8d35191292, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5753ed5260f015c4a9e07bfd65fcf4d5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3be7636486e86fd4794d79e35025f99c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1d488015eb2396a4ba4912cb7ff38985, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2def2f45b9ab2dc49a3dc0d233ee6429, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b1e876b5d463a894981876159fc47f77, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5131f9067c9c8a14fa4b663e743c7ba5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 63c94167180bb344893cc477dcfa3d5f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7b8a2fe909d23df4393155e064740e1c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a8e0bd1bb8b99fd47ad9c2327fca32dd, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4de7265b8163cab44b9b1de4e1a17221, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 80b6eaab7b33ac043890259d8b1902c3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: cdc7123da7889314e8b68f24f31c8926, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 45a9b93d1e72cc64abf93423f3359833, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4258fa4e115deb4499f1faa4c2c00aa9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e755367efe829424eb45fe95a3724367, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0c6c0d9e9e600c5499d9e9fc63ac1fc7, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 44528bee23842d04ebb82bead5366251, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 20c8070f13b88944aa20b3fe7523e6b1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 14c8eb2f877c59a4d860eccbfda4e37b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3a64198f921802f4a98fea96a2b0a546, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1281a19f76477b041b46f6c07f16b978, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+- Class: 225
+  Script: {instanceID: 0}
+Assets:
+- Assets/Prefabs/Sphere.prefab
+- Assets/Prefabs/Prefabs Mandate In level/UICanvas.prefab
+- Assets/Prefabs/10Xcoins 1.prefab
+- Assets/Prefabs/AntiGravity.prefab
+- Assets/Prefabs/Prefabs Mandate In level/TurretEnemy.prefab
+- Assets/Prefabs/AudioManager 1.prefab
+- Assets/Prefabs/Prefabs Mandate In level/ScoreManager.prefab
+- Assets/Prefabs/Prefabs Mandate In level/ObjectPoolManager.prefab
+- Assets/Prefabs/Particle System.prefab
+- Assets/Prefabs/10Xcoins.prefab
+- Assets/Prefabs/Immune.prefab
+- Assets/Prefabs/ShopItemCard.prefab
+- Assets/Resources/Bullet.prefab
+- Assets/Prefabs/Prefabs Mandate In level/MiniMapCam.prefab
+- Assets/Prefabs/Prefabs Mandate In level/PowerUpmanager.prefab
+- Assets/Prefabs/Button.prefab
+- Assets/Prefabs/Prefabs Mandate In level/Turret.prefab
+- Assets/Prefabs/Prefabs Mandate In level/GameManager.prefab
+- Assets/Prefabs/Coins.prefab
+- Assets/Prefabs/Prefabs Mandate In level/CoinManager.prefab
+- Assets/Prefabs/Prefabs Mandate In level/AudioManager.prefab
+- Assets/Prefabs/Cylinder (6).prefab
+- Assets/Prefabs/Prefabs Mandate In level/Player.prefab
+- Assets/Prefabs/Prefabs Mandate In level/HealthCube.prefab
+- Assets/Prefabs/Prefabs Mandate In level/LevelManager.prefab
+- Assets/Prefabs/Canvas.prefab
+Dependencies: []

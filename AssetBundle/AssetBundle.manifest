@@ -1,0 +1,11 @@
+ManifestFileVersion: 0
+CRC: 3094479919
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: sound bundle.sound
+      Dependencies: {}
+    Info_1:
+      Name: characters
+      Dependencies:
+        Dependency_0: sound bundle.sound
