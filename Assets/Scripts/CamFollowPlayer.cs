@@ -11,6 +11,7 @@ public class CamFollowPlayer : MonoBehaviour
     private void Start()
     {
         offset = transform.position - Player.transform.position;
+        offset.x = 0;
     }
     private void Update()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    
+
     public float playerDamageRate = 3f;
     private float health = 10f;
     [SerializeField]
@@ -62,7 +62,7 @@ public class PlayerHealth : MonoBehaviour
             else if (health <= 0f)
             {
                 health = 0;
-                GameManager.sharedInstance.GameOver();
+                GameOver(); 
             }
             DisplayHealth(health / maxHealth);
         }
@@ -88,16 +88,14 @@ public class PlayerHealth : MonoBehaviour
     {
         GameManager.sharedInstance.DisplayHealth(_health);
     }
-    void AddScore(int _value)
-    {
-        GameManager.sharedInstance.AddScore(_value);
-    }
+    //void AddScore(int _value)
+    //{
+    //    GameManager.sharedInstance.AddScore(_value);
+    //}
     public void Play()
     {
-
         Health = maxHealth;
         HealthMode = HealthMode.reducing;
-
     }
     public void GameWin()
     {
@@ -147,7 +145,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-   
+
 
     [Range(0f, 40f)]
     public float slider;
@@ -163,9 +161,9 @@ public class PlayerHealth : MonoBehaviour
             FallFromHeight(slider);
         }
     }
-   public void FallFromHeight(float _fallHeight)
+    public void FallFromHeight(float _fallHeight)
     {
-        
+
         fallHeightForAc = Mathf.InverseLerp(3f, 25f, _fallHeight);
         calculateDamage = (maxHealth / 100) * ac.Evaluate(fallHeightForAc) * 100;
         Health -= calculateDamage;

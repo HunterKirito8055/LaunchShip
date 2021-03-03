@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class ObjectPoolManager : MonoBehaviour
 {
-     static ObjectPoolManager objPM_instance;
-  public   static ObjectPoolManager OBJ_PM_INSTANCE
+    static ObjectPoolManager objPM_instance;
+    public static ObjectPoolManager OBJ_PM_INSTANCE
     {
-        get 
+        get
         {
-            if(objPM_instance == null)
+            if (objPM_instance == null)
             {
 
                 objPM_instance = FindObjectOfType<ObjectPoolManager>();
                 //if we cant object of the above type in scene, 
                 //then we must load the object from resources
-                if(objPM_instance == null)
+                if (objPM_instance == null)
                 {
                     GameObject newObject = new GameObject("Object Pool Manager: Instance");
                     newObject.AddComponent<ObjectPoolManager>();
@@ -27,7 +27,7 @@ public class ObjectPoolManager : MonoBehaviour
                     return objPM_instance;
                 }
             }
-            return objPM_instance; 
+            return objPM_instance;
         }
         set
         {
@@ -40,19 +40,19 @@ public class ObjectPoolManager : MonoBehaviour
     public int poolSize = 5, extraIncreaseAmount = 5;
 
     public PoolClassifier bulletPrefab;
-   
+
     private void Awake()
     {
         OBJ_PM_INSTANCE = this;
     }
     void Start()
     {
-       //newChildObj = new GameObject(bulletPrefab.prefabObject.name + " child");
-       // newChildObj.transform.parent = transform;
+        //newChildObj = new GameObject(bulletPrefab.prefabObject.name + " child");
+        // newChildObj.transform.parent = transform;
         InitialisePool();
-        if(bulletPrefab!=null)
+        if (bulletPrefab != null)
         {
-        bulletPrefab.Initialise();
+            bulletPrefab.Initialise();
         }
 
     }
@@ -67,7 +67,7 @@ public class ObjectPoolManager : MonoBehaviour
         {
             // if none is active, then we should increase pool size
             //and control does not goes into below if condition
-            if (!item.activeSelf) 
+            if (!item.activeSelf)
             {
                 item.GetComponent<ParticleEffect>().Play(_playAtPosition);
                 return;
@@ -90,34 +90,34 @@ public class ObjectPoolManager : MonoBehaviour
 
 
 [System.Serializable]
-public class PoolClassifier 
+public class PoolClassifier
 {
-   // ObjectPoolManager objpoolMan;
+    // ObjectPoolManager objpoolMan;
     public GameObject prefabObject;
     public List<GameObject> poolObjectList;
     public int poolSize;
     public int extraIncreaseSize;
-   
+
     public void Initialise()
     {
         poolObjectList = new List<GameObject>();
-        if(poolSize<1)
-        { 
-        poolSize = 5 ;
+        if (poolSize < 1)
+        {
+            poolSize = 5;
         }
         IncreasePool(poolSize);
     }
     public GameObject UseFromPoolManager()
     {
         //if no object is assigned, then take from resouces folder in assets
-        if (prefabObject==null)
+        if (prefabObject == null)
         {
-          prefabObject = (GameObject)  Resources.Load("Bullet");
+            prefabObject = (GameObject) Resources.Load("Bullet");
             Initialise();
         }
         foreach (var item in poolObjectList)
         {
-            if(!item.activeSelf)
+            if (!item.activeSelf)
             {
                 return item;
             }
@@ -127,7 +127,7 @@ public class PoolClassifier
     }
     void IncreasePool(int size)
     {
-        for(int i=0;i<size;i++)
+        for (int i = 0; i < size; i++)
         {
             GameObject go = MonoBehaviour.Instantiate(prefabObject/*, objpoolMan.newChildObj.transform*/);
             go.SetActive(false);

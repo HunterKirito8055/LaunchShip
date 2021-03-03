@@ -15,10 +15,6 @@ public class ScoreManager : MonoBehaviour
             DisplayScore(score);
         }
     }
-    private void Awake()
-    {
-        //DontDestroyOnLoad(gameObject);
-    }
     private void Start()
     {
         PlayerPrefs.GetInt(scoreKey, 0);

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
     public float enemyDamageRate = 5f;
-    TurretE turretE;
+    //TurretE turretE;
     [SerializeField] Slider healthBar;
     Image fillImage;
     [SerializeField ] GameObject parentObj;
@@ -32,7 +32,7 @@ public float currentHealth;
 
     private void Awake()
     {
-        turretE = GetComponent<TurretE>();
+        //turretE = GetComponent<TurretE>();
         parentObj = GetComponent<TurretE>().transform.gameObject;
         fillImage = healthBar.fillRect.GetComponent<Image>();
     }
@@ -49,7 +49,7 @@ public float currentHealth;
             healthBar.value = CurrentHealth / maxHealth;
             fillImage.color = GameManager.sharedInstance.GetHealthGradient(healthBar.value);
 
-            print(healthBar.value);
+            //print(healthBar.value);
         } 
     }
     public void Replay()

@@ -13,10 +13,7 @@ public class LevelManager : MonoBehaviour
     {
         currentIndex = SceneManager.GetActiveScene().buildIndex;
         totalIndex = SceneManager.sceneCountInBuildSettings;
-        //if (currentIndex > 0)
-        //{
-        //    Play();
-        //}
+      
     }
     public int GetTotalScenes()
     {
@@ -31,6 +28,7 @@ public class LevelManager : MonoBehaviour
 
         if (totalIndex > currentIndex + 1)
         {
+            print(currentIndex + 1);
             SceneManager.LoadScene(currentIndex + 1);
         }
         else

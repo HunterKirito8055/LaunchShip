@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de7265b8163cab44b9b1de4e1a17221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShootPoint: {fileID: 864690977}
 --- !u!82 &777113255
 AudioSource:
   m_ObjectHideFlags: 0
@@ -349,6 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57fc1f0b9ff3bd43880cd1d97f6d478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthScript: {fileID: 0}
   playerStartPosition: {x: 0, y: 0, z: 0}
   rotationSpeed: 5
   layerMask:
@@ -356,8 +356,10 @@ MonoBehaviour:
     m_Bits: 256
   currentPoweruptype: 0
   isdragged: 0
+  ShootPoint: {fileID: 864690977}
   speed: 8
   jumpForce: 4
+  gameWon: 0
   airTime: 0
   fallHeight: 0
   isFalling: 0
@@ -373,6 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4258fa4e115deb4499f1faa4c2c00aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDamageRate: 3
   healthDecreaseRate: 0
   healthIncreaseRate: 1
   maxHealth: 100

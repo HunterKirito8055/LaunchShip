@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ParticleEffect : MonoBehaviour
 {
-    private ParticleSystem particleSystem;
+    private new ParticleSystem particleSystem;
     private void Awake()
     {
         particleSystem = GetComponent<ParticleSystem>();

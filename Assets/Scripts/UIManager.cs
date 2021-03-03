@@ -7,8 +7,8 @@ using System;
 
 public class UIManager : MonoBehaviour
 {
-  
-  // public UIPanel[] allpanels;
+
+    // public UIPanel[] allpanels;
     public List<UIPanel> allpanelsList;
     public EUI_PANEL startingPanel;
 
@@ -20,19 +20,20 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TMP_Text scoreText;
     [SerializeField]
-    private GameObject  backGroundImage;
+    private GameObject backGroundImage;
     //[SerializeField]
     //private GameObject mainMenuPanel, settingsPanel,pausePanel,inputField_Panel, hudPanel, youWonPanel, gameOverPanel;
 
 
-    public TMP_Text powerUpname,powerUpTimerText,displayLevelText;
+    public TMP_Text powerUpname, powerUpTimerText, displayLevelText;
     public Image powerUpImage;
-    public Button previousBtn,nextLevelBtn;
+    public Button previousBtn, nextLevelBtn;
     bool gameIsOn;
-    
+
     public int currentLevelIndex;
     bool isPauseGame;
-    public bool IsPauseGame{
+    public bool IsPauseGame
+    {
         get
         {
             return isPauseGame;
@@ -43,27 +44,29 @@ public class UIManager : MonoBehaviour
             if (isPauseGame)
             {
                 ActivatePanel(EUI_PANEL.pauseE);
+                //GameManager.sharedInstance.playerScript.CanShootSet(false);
                 Time.timeScale = 0f;
             }
             else
-            { 
+            {
                 ActivatePanel(EUI_PANEL.hudE);
+                //GameManager.sharedInstance.playerScript.CanShootSet(true);
                 Time.timeScale = 1f;
             }
         }
-  }
-  
+    }
+
 
     private void Awake()
     {
         // allpanels = GetComponentsInChildren<UIPanel>();
         allpanelsList = new List<UIPanel>();
-        for(int i = 1; i < transform.childCount; i++)
+        for (int i = 1; i < transform.childCount; i++)
         {
             allpanelsList.Add(transform.GetChild(i).GetComponent<UIPanel>());
         }
         healthFillBar = healthSilder.fillRect.GetComponent<Image>();
-        
+
     }
     private void Start()
     {
@@ -71,27 +74,11 @@ public class UIManager : MonoBehaviour
         LoadButtonSetup();
         currentLevelIndex = GetCurrentSceneIndex();
         DisplayLevel(currentLevelIndex);
-        if(PlayerPrefs.HasKey(playerNameKey))
-        {
-            if(currentLevelIndex<1)
-            {
-                //ActivatePanel(EUI_PANEL.mainMenuE);
-                ActivatePanel(startingPanel);
-                playernameText.text = "Welcome " + PlayerPrefs.GetString(playerNameKey);
-            }
-            else
-            {
-                StartGame();
-            }
-        }
-        else
-        {
-            ActivatePanel(EUI_PANEL.welcomeE);
-        }
+        //PlayerNameInit();
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) && !gameIsOn)
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameIsOn)
         {
             IsPauseGame = !IsPauseGame;
             print(IsPauseGame);
@@ -105,15 +92,15 @@ public class UIManager : MonoBehaviour
         if (_uiPanel)
         {
             _uiPanel.Show();
-           
+
         }
-        if(gameIsOn)
+        if (gameIsOn)
         {
             //we shld do this, as we are gng back to main menu and that is itself a starting panel of game
-            if (_uiPanel.eui_Panel == EUI_PANEL.mainMenuE) 
+            if (_uiPanel.eui_Panel == EUI_PANEL.mainMenuE)
             {
-                IsPauseGame = false;
-                LoadLevelByIndex(0);
+                // IsPauseGame = false;
+                // LoadLevelByIndex(0);
             }
         }
 
@@ -127,41 +114,41 @@ public class UIManager : MonoBehaviour
         switch (_euipanel)
         {
             case EUI_PANEL.hudE:
-                {
-                    gameIsOn = true;
-                    backGroundImage.SetActive(false);
-                    break;
-                }
+            {
+                gameIsOn = true;
+                backGroundImage.SetActive(false);
+                break;
+            }
             case EUI_PANEL.mainMenuE:
-                {
-                    gameIsOn = false;
-                    backGroundImage.SetActive(true);
-                    break;
-                }
+            {
+                gameIsOn = false;
+                backGroundImage.SetActive(true);
+                break;
+            }
             case EUI_PANEL.settingsE:
-                {
-                    break;
-                }
+            {
+                break;
+            }
             case EUI_PANEL.gameOverE:
-                {
-                    break;
-                }
+            {
+                break;
+            }
             case EUI_PANEL.gameWinE:
-                {
-                    break;
-                }
+            {
+                break;
+            }
             case EUI_PANEL.pauseE:
+            {
+                if (!gameIsOn)
                 {
-                    if (!gameIsOn)
-                    {
-                        IsPauseGame = !IsPauseGame;
-                    }
-                    break;
+                    IsPauseGame = !IsPauseGame;
                 }
+                break;
+            }
             case EUI_PANEL.welcomeE:
-                {
-                    break;
-                }
+            {
+                break;
+            }
             //case EUI_PANEL.shop:
             //    {
             //        gameIsOn = false;
@@ -179,14 +166,14 @@ public class UIManager : MonoBehaviour
         }
 
     }
-   
+
     UIPanel GetUIpanelFromEnum(EUI_PANEL euipanel)
     {
         foreach (UIPanel item in allpanelsList)
         {
             if (item.eui_Panel == euipanel)
             {
-               //settingsPanel.SoundPlay("button");
+                //settingsPanel.SoundPlay("button");
                 GameManager.sharedInstance.SoundPlay("button");
                 return item;
             }
@@ -198,7 +185,7 @@ public class UIManager : MonoBehaviour
     void Initialise()
     {
         HideallPanels();
-      //  PlayerPrefs.GetInt(gameinputkey, GameInputs ? 1 : 0);
+        //  PlayerPrefs.GetInt(gameinputkey, GameInputs ? 1 : 0);
         //SoundInitialization();
         PlayerNameInit();
     }
@@ -210,16 +197,16 @@ public class UIManager : MonoBehaviour
             {
                 item.Hide();
             }
-           // backGroundImage.SetActive(true);
+            // backGroundImage.SetActive(true);
         }
     }
-  
+
     public void DisplayHealth(float _health)
     {
         healthSilder.value = _health;
         healthFillBar.color = healthGradient.Evaluate(_health);
     }
-   
+
 
     public void PowerUpFill(float _powerup, float _powerUpTimerText)
     {
@@ -246,18 +233,22 @@ public class UIManager : MonoBehaviour
             ActivatePanel(EUI_PANEL.hudE);
             gameIsOn = false;
             GameManager.sharedInstance.Play();
-        }   
+        }
     }
     public void RestartGame()
     {
         GameManager.sharedInstance.Restart();
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
     }
     public void BackToMainPanel()
     {
         if (IsPauseGame)
             ActivatePanel(EUI_PANEL.pauseE);
         else
-            ActivatePanel(EUI_PANEL.mainMenuE); 
+            ActivatePanel(EUI_PANEL.mainMenuE);
     }
 
     public void ResumeGame()
@@ -277,7 +268,104 @@ public class UIManager : MonoBehaviour
     }
 
 
-    //public Button ToggleBtn;
+
+
+    #region player data
+    //playername data
+    string playerNameKey = "playername";
+    public string playername;
+    public TMP_InputField playernameText;
+    public TMP_Text showplayername;
+
+    void PlayerNameInit()
+    {
+        if (PlayerPrefs.GetString(playerNameKey) != null)
+        {
+            if (currentLevelIndex < 1)
+            {
+                ActivatePanel(EUI_PANEL.mainMenuE);
+                //ActivatePanel(startingPanel);
+                playernameText.text = "Welcome " + PlayerPrefs.GetString(playerNameKey);
+            }
+            else
+            {
+                StartGame();
+            }
+        }
+        else
+        {
+            print("no player name");
+            ActivatePanel(EUI_PANEL.welcomeE);
+        }
+        //======
+    }
+
+
+    public void EnterPlayerName(string _name)
+    {
+        playername = _name;
+        playernameText.text = playername;
+        PlayerPrefs.SetString(playerNameKey, playername);
+    }
+
+
+    #endregion
+
+    #region LevelInfo
+    public void NextLevel()
+    {
+        GameManager.sharedInstance.NextLevel();
+
+    }
+    public void DisplayLevel(int display)
+    {
+        displayLevelText.text = "Level : " + display.ToString();
+
+    }
+    public void PreviousLevel()
+    {
+        GameManager.sharedInstance.PreviousLevel();
+    }
+    public int GetCurrentSceneIndex()
+    {
+        return GameManager.sharedInstance.GetCurrentSceneIndex();
+    }
+
+    public bool IsPrevLevelThere()
+    {
+        return GameManager.sharedInstance.IsPrevLevelThere();
+    }
+    public bool IsNextLevelThere()
+    {
+        return GameManager.sharedInstance.IsNextLevelThere();
+    }
+
+    void LoadButtonSetup()
+    {
+        nextLevelBtn.interactable = IsNextLevelThere();
+
+        previousBtn.gameObject.GetComponentInChildren<TMP_Text>().text = IsPrevLevelThere() ? "Previous Level" : "Main Menu";
+    }
+
+    #endregion
+
+
+}
+public enum EUI_PANEL
+{
+    loadingLevelE,
+    hudE,
+    mainMenuE,
+    settingsE,
+    gameOverE,
+    gameWinE,
+    pauseE,
+    welcomeE,
+    levelSelectE,
+    shop
+}
+
+/* //public Button ToggleBtn;
     //public GameObject joyStickObj;
     //string gameinputkey = "inputKey";
     // bool toggleInput;
@@ -397,94 +485,4 @@ public class UIManager : MonoBehaviour
     //{
     //    GameManager.sharedInstance.GSetVolume(_volume);
     //}
-    #endregion
-
-    #region player data
-    //playername data
-    string playerNameKey = "playername";
-    string playername;
-    public TMP_InputField playernameText;
-    public TMP_Text showplayername;
-
-    void PlayerNameInit()
-    {
-        if (PlayerPrefs.HasKey(playerNameKey))
-        {
-            
-            if(GetCurrentSceneIndex() == 0)
-            {
-                ActivatePanel(EUI_PANEL.mainMenuE) ;
-            }
-           
-            showplayername.text = "Welcome " + PlayerPrefs.GetString(playerNameKey, playername);
-        }
-        else
-        {
-            ActivatePanel(EUI_PANEL.welcomeE);
-        }
-    }
-  
-  
-    public void EnterPlayerName(string _name)
-    {
-        playername = _name;
-        playernameText.text =  playername;
-        PlayerPrefs.SetString(playerNameKey, playername);
-    }
-   
-  
-    #endregion
-
-    #region LevelInfo
-    public void NextLevel()
-    {
-        GameManager.sharedInstance.NextLevel();
-
-    }
-    public void DisplayLevel(int display)
-    {
-        displayLevelText.text = "Level : " + display.ToString();
-
-    }
-    public void PreviousLevel()
-    {
-        GameManager.sharedInstance.PreviousLevel();
-    }
-    public int GetCurrentSceneIndex()
-    {
-        return GameManager.sharedInstance.GetCurrentSceneIndex();
-    }
-
-    public bool IsPrevLevelThere()
-    {
-        return GameManager.sharedInstance.IsPrevLevelThere();
-    }
-    public bool IsNextLevelThere()
-    {
-        return GameManager.sharedInstance.IsNextLevelThere();
-    }
-
-    void LoadButtonSetup()
-    {
-        nextLevelBtn.interactable = IsNextLevelThere();
-
-        previousBtn.gameObject.GetComponentInChildren<TMP_Text>().text = IsPrevLevelThere() ? "Previous Level" : "Main Menu";
-    }
-
-    #endregion
-
-  
-}
-public enum EUI_PANEL
-{
-    loadingLevelE,
-    hudE,
-    mainMenuE,
-    settingsE,
-    gameOverE,
-    gameWinE,
-    pauseE,
-    welcomeE,
-    levelSelectE,
-    shop
-}
+    #endregion*/

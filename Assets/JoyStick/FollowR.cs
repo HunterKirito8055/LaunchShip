@@ -8,15 +8,7 @@ public class FollowR : MonoBehaviour
     Vector3 input;
     public float rotationSpeed = 5f;
     public float moveSpeed = 5f;
-    private void Awake()
-    {
-     
-    }
-    void Start()
-    {
-        
-        
-    }
+  
 
     // Update is called once per frame
     public Vector3 face;
@@ -25,10 +17,10 @@ public class FollowR : MonoBehaviour
        
         //move(GetInput());
         //Rotation(GetInput());
-        move(JoyStick.move);
+        Move(JoyStick.move);
         Rotation(JoyStick.move); 
     }
-    void move(Vector3 move)
+    void Move(Vector3 move)
     {
         transform.position += transform.forward * moveSpeed * Time.deltaTime * move.magnitude ;
     }

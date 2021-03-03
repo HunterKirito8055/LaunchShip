@@ -8,14 +8,15 @@ using UnityEngine.Networking;
 
 public class LoadAssetBundle : MonoBehaviour
 {
-    public PercentageEvent percentageEvent;
+    public OnFloatMod percentageEvent;
     public Image fillImage;
     AssetBundle assetBundle;
     public List<string> assetLists;
     public GameObject[] gameObjects;
     //const string prefabBundlePath = @"V:\work\LAUNCH SHIP OFFICE\launchShipTrain\AssetBundle\prefab bundle";
     public string persistentPath = "";
-     const string dataDownloadURL = @"https://drive.google.com/u/1/uc?id=1gmPLDd_gF6Q0bpATaaVY6dvocUQoSv8a&export=download";
+    const string dataDownloadURL = @"https://drive.google.com/u/1/uc?id=1qk3djmFmlETjo9-96n5FuUk36_T67MHt&export=download";
+    //const string dataDownloadURL = @"https://drive.googgle.com/u/0/uc?id=1h8Fst_490qKwh-J2itkti3uuZ2fTsNry&export=download"; //Anands' File link
      byte[] memoryByte;
     private void Start()
     {
@@ -28,7 +29,6 @@ public class LoadAssetBundle : MonoBehaviour
         UnityWebRequest unityWebRequest = UnityWebRequest.Get(dataDownloadURL);
         DownloadHandler downloadHandler = unityWebRequest.downloadHandler;
         AsyncOperation async = unityWebRequest.SendWebRequest();
-        //  unityWebRequest.SendWebRequest();
 
         while (!async.isDone)
         {
@@ -40,10 +40,10 @@ public class LoadAssetBundle : MonoBehaviour
         {
             fillImage.fillAmount = 1;
             Debug.Log("downloaded file is : " + downloadHandler.isDone);
-            memoryByte = downloadHandler.data;
         }
+        memoryByte = downloadHandler.data;
         SaveDataFile();
-        LoadAssets(memoryByte);
+       StartCoroutine(LoadAssets());
         yield return new WaitForSeconds(Time.deltaTime);
     }
     void SaveDataFile()
@@ -51,29 +51,27 @@ public class LoadAssetBundle : MonoBehaviour
         File.WriteAllBytes(persistentPath + "/characters", memoryByte);
 
     }
-    void LoadAssets(byte[] _memoryData)
+    IEnumerator LoadAssets()
     {
         //assetBundle = AssetBundle.LoadFromFile(prefabBundlePath);
         assetBundle = AssetBundle.LoadFromFile(persistentPath + "/characters");
         //assetBundle = AssetBundle.LoadFromMemory(_memoryData);
         if (assetBundle)
         {
-            print("File Exists already");
+            gameObjects = assetBundle.LoadAllAssets<GameObject>();
+            for (int i = 0; i < gameObjects.Length; i++)
+            {
+                GameObject go = Instantiate(gameObjects[i], Vector3.right * 2 * i, Quaternion.identity);
+                go.SetActive(false);
+                yield return new WaitForSeconds(Random.Range(0.4f, 0.9f));
+            }
         }
         else
         {
-            return;
+            print("no assetBundle exists");
         }
-        gameObjects = assetBundle.LoadAllAssets<GameObject>();
-        for (int i = 0; i < gameObjects.Length; i++)
-        {
-           Instantiate(gameObjects[i],Vector3.right * 2*i ,Quaternion.identity);
-        }
+        
     }
-}
 
-[System.Serializable]
-public class PercentageEvent : UnityEvent<float>
-{
+}//class
 
-}

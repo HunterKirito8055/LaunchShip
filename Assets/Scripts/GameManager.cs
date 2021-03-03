@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager sharedInstance;
     [SerializeField]
     private Gradient healthGradient;
-    public GameData gameDataScript;
+    public PlayerPrefsRegister gameDataScript;
     public Player playerScript;
     public TurretE turretE;
     public UIManager uIManagerScript;
@@ -18,10 +18,11 @@ public class GameManager : MonoBehaviour
     private ScoreManager scoreManagerScript;
     private PowerUpManager powerupManagerScript;
     private AudioManager audioManagerScript;
-   EnemyHealth enemyHealthScript;
-   public SettingsData settingsData;
+    EnemyHealth enemyHealthScript;
+    public SettingsData settingsData;
     public GoldScript goldScript;
     public int goldValue;
+    public string sharedTimeforClicking;
     private void Awake()
     {
         if (sharedInstance == null)
@@ -30,28 +31,33 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            
+
             Destroy(gameObject);
         }
-        playerScript = FindObjectOfType<Player>();
-        uIManagerScript = FindObjectOfType<UIManager>();
-        particleEMScript = FindObjectOfType<ObjectPoolManager>();
-        coinManagerScript = FindObjectOfType<CoinManager>();
-        levelManagerScript = FindObjectOfType<LevelManager>();
-        scoreManagerScript = FindObjectOfType<ScoreManager>();
-        powerupManagerScript = FindObjectOfType<PowerUpManager>();
-        audioManagerScript = FindObjectOfType<AudioManager>();
-        settingsData = FindObjectOfType<SettingsData>();
-        goldScript = FindObjectOfType<GoldScript>();
-        turretE = FindObjectOfType<TurretE>();
-        settingsData = FindObjectOfType<SettingsData>();
+        if (playerScript == null) playerScript = FindObjectOfType<Player>();
+        if (uIManagerScript == null) uIManagerScript = FindObjectOfType<UIManager>();
+        if (particleEMScript == null) particleEMScript = FindObjectOfType<ObjectPoolManager>();
+        if (coinManagerScript == null) coinManagerScript = FindObjectOfType<CoinManager>();
+        if (levelManagerScript == null) levelManagerScript = FindObjectOfType<LevelManager>();
+        if (scoreManagerScript == null) scoreManagerScript = FindObjectOfType<ScoreManager>();
+        if (powerupManagerScript == null) powerupManagerScript = FindObjectOfType<PowerUpManager>();
+        if (audioManagerScript == null) audioManagerScript = FindObjectOfType<AudioManager>();
+        if (settingsData == null) settingsData = FindObjectOfType<SettingsData>();
+        if (goldScript == null) goldScript = FindObjectOfType<GoldScript>();
+        if (turretE == null) turretE = FindObjectOfType<TurretE>();
+        if (settingsData == null) settingsData = FindObjectOfType<SettingsData>();
+        if (enemyHealthScript == null) enemyHealthScript = FindObjectOfType<EnemyHealth>();
     }
     public void YouWon()
     {
-        playerScript.GameOver = true;
+        playerScript.gameWon = true;
         SwitchPanel(EUI_PANEL.gameWinE);
         playerScript.GameWin();
-        
+
+        // we started having enemies after few level only
+        //so while in few levels, we dont have turret object
+        if (turretE)
+            turretE.CheckGameOver();
     }
 
     public void DisplayHealth(float _health)
@@ -78,10 +84,26 @@ public class GameManager : MonoBehaviour
     {
         playerScript.Restart();
         SwitchPanel(EUI_PANEL.hudE);
-        coinManagerScript.ResetCoins();
-        powerupManagerScript.Replay();
-        enemyHealthScript.Replay();
-        turretE.Replay();
+        if (coinManagerScript)
+        {
+            Debug.Log("coinManagerScript Restart");
+            coinManagerScript.ResetCoins();
+        }
+        if (powerupManagerScript)
+        {
+            Debug.Log("powerupManagerScript Restart");
+            powerupManagerScript.Replay();
+        }
+        if (enemyHealthScript)
+        {
+            Debug.Log("enemyHealthScript Restart");
+            enemyHealthScript.Replay();
+        }
+        if (turretE)
+        {
+            Debug.Log("turretE Restart");
+            turretE.Replay();
+        }
     }
     public Color GetHealthGradient(float val)
     {
@@ -94,8 +116,10 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
-        turretE.GameOverCheck();
+        if (turretE)
+            turretE.CheckGameOver();
         Invoke("ActivateGameOver", 0.9f);
+        playerScript.GameOver = true;
     }
     void ActivateGameOver()
     {
@@ -108,7 +132,7 @@ public class GameManager : MonoBehaviour
             uIManagerScript.ActivatePanel(euipanel);
         }
     }
-    public void PowerUpFill(float _powerup,float _powerUpTimerText)
+    public void PowerUpFill(float _powerup, float _powerUpTimerText)
     {
         uIManagerScript.PowerUpFill(_powerup, _powerUpTimerText);
     }
@@ -143,17 +167,19 @@ public class GameManager : MonoBehaviour
     {
         return levelManagerScript.IsNextLevelThere();
     }
-    public void ToggleControllerType(bool _drag)
+    public void ToggleControllerType(bool MblOrPc)
     {
-        playerScript.GameInputs(_drag);
+        if (playerScript)
+            playerScript.GameInputs(MblOrPc);
     }
     public bool ISGAMEOVERFUNC()
     {
+        //playerScript.CanShootSet(false);
         return playerScript.GameOver;
     }
-    
+
     #region SoundManager
-   
+
     bool soundInfo;
     public void SoundPlay(string _soundname)
     {
@@ -173,6 +199,6 @@ public class GameManager : MonoBehaviour
     {
         audioManagerScript.MainSoundVolue(_vol);
     }
-    
+
     #endregion
 }

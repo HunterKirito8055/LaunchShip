@@ -9,15 +9,16 @@ public class GoldScript : MonoBehaviour
     public Text goldField;
     public Text goldShop;
     string goldKey = "GoldCount";
-   public int goldAmount;
+    public int goldAmount;
     public int GOLDAMOUNT
     {
         get { return goldAmount; }
-        set
+       private set
         {
             goldAmount = value;
             if (goldAmount > 0)
             {
+                PlayerPrefs.SetInt(goldKey, goldAmount);
                 DisplayGoldAmount();
             }
         }
@@ -26,38 +27,46 @@ public class GoldScript : MonoBehaviour
     private void Awake()
     {
         goldInstance = this;
+        GOLDAMOUNT = PlayerPrefs.GetInt(goldKey);
     }
     void Start()
     {
-        GOLDAMOUNT = PlayerPrefs.GetInt(goldKey);
-      DisplayGoldAmount();
+        RetrieveDefaultGold();
+        DisplayGoldAmount();
     }
-
-   public void DisplayGoldAmount()
+    void RetrieveDefaultGold()
     {
-        goldField.text = "Gold :" + GOLDAMOUNT.ToString("000,00");
-        goldShop.text = "Gold :" + GOLDAMOUNT.ToString("000,00");
+        GOLDAMOUNT = PlayerPrefs.GetInt(goldKey, 1000);
     }
-   public  void AddGoldBonus(int count)
+    public void DisplayGoldAmount()
     {
-        GOLDAMOUNT += count ;
-        PlayerPrefs.SetInt(goldKey, GOLDAMOUNT);
-       //DisplayGoldAmount();
+        goldShop.text = "Gold :" + GOLDAMOUNT.ToString("00,000");
+        goldField.text = "Gold :" + GOLDAMOUNT.ToString("00,000");
     }
-    public void SpendGold(int _howmuch)
+    public void AddGoldBonus(int count)
+    {
+        GOLDAMOUNT += count;
+    }
+    
+    public void SpendGold(int _howmuch,out ItemPurchaseStatus status)
     {
         int goldLeft = GOLDAMOUNT - _howmuch;
-        if(goldLeft>=0)
+        if (goldLeft >= 0)
         {
             //we can buy anything checking purchase value conditions
             GOLDAMOUNT = goldLeft;
-            PlayerPrefs.SetInt(goldKey, GOLDAMOUNT);
-           // DisplayGoldAmount();
+            // DisplayGoldAmount();
+            status = ItemPurchaseStatus.success;
         }
         else
         {
-            print("No Gold Enough, Get more Gold");
+            //print("No Gold Enough, Get more Gold");
+            status = ItemPurchaseStatus.noGold;
         }
     }
-   
+
+}
+public enum ItemPurchaseStatus
+{
+    failed, noGold, success, processing
 }

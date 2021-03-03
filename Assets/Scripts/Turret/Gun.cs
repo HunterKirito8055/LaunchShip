@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-   // public GameObject bullet;
-    public Transform ShootPoint;
+    // public GameObject bullet;
+    //public Transform ShootPoint;
     AudioSource audioSource;
-    float shootTimer;
+    GameObject newbullet;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
     }
-    public  void ShootBullet()
+    public void ShootBullet(Vector3 _shootPos, Quaternion _rotation)
     {
-                GameObject newbullet = GetObjectFromPool();
-                newbullet.SetActive(true);
-        if(GameManager.sharedInstance.settingsData.SoundInfo)
-                 audioSource.Play();
-                newbullet.transform.position = ShootPoint.position;
-                newbullet.transform.rotation = Quaternion.identity;
-                newbullet.GetComponent<Rigidbody>().AddForce(transform.forward * 500f);
+        newbullet = GetObjectFromPool();
+        newbullet.SetActive(true);
+        if (GameManager.sharedInstance.settingsData.SoundInfo)
+            audioSource.Play();
+        newbullet.transform.position = _shootPos;
+        newbullet.transform.localRotation = _rotation;
+        newbullet.GetComponent<Rigidbody>().AddForce(newbullet.transform.forward * 500f);
     }
-  
+
 
     GameObject GetObjectFromPool()
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : MonoBehaviour
 {
@@ -14,7 +14,8 @@ public class Player : MonoBehaviour
     public float rotationSpeed = 5f;
     public LayerMask layerMask;
     public PowerType currentPoweruptype;
-    public bool isdragged;
+    public bool MblInputs;
+    public Transform ShootPoint;
 
     #region DataTypes
     [SerializeField]
@@ -26,6 +27,8 @@ public class Player : MonoBehaviour
     private float maxHealth = 10;
     private int scoreValue = 1;
     private bool gameOver;
+    public bool gameWon;
+    bool canShoot = false;
     bool isInHealth = false;
     #endregion
 
@@ -81,16 +84,16 @@ public class Player : MonoBehaviour
         set
         {
             gameOver = value;
-            if(healthScript.Health <= 0)
+            if (healthScript.Health <= 0)
             {
-                
+
                 rb.useGravity = false;
                 rb.Sleep();
                 gameOver = true;
             }
             if (gameOver)
             {
-                GameManager.sharedInstance.GameOver();
+                //GameManager.sharedInstance.GameOver();
                 CurrentPowerUpType = PowerType.None;
                 healthScript.GameOver();
             }
@@ -107,39 +110,77 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-
+        MblInputs = true;
         rb = GetComponent<Rigidbody>();
         playerStartPosition = transform.position;
         CurrentPowerUpType = PowerType.None;
     }
     void Update()
     {
-        if (GameOver)
+        if (GameOver || gameWon)
         {
             return;
         }
         Move(GetInput());
         Rotation(GetInput());
-        Jump();
-      if (!GameManager.sharedInstance.uIManagerScript.IsPauseGame)
-            ShootFun();
-        CheckPlayerisFalling();
-    }
-    #endregion
-    void ShootFun()
-    {
-        if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.B))
+        bool canJump = Physics.Raycast(transform.position, -transform.up, 0.6f, layerMask);
+        if (MblInputs)
         {
-            gunScript.ShootBullet();
+            if (CrossPlatformInputManager.GetButtonUp("Jumping"))
+            {
+                Jump();
+            }
+            if (CrossPlatformInputManager.GetButtonUp("Shoot"))
+            {
+                ShootFun();
+            }
         }
+        else
+        {
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.B))
+            {
+                ShootFun();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && canJump)
+            {
+                Jump();
+            }
+        }
+
+        if (!GameManager.sharedInstance.uIManagerScript.IsPauseGame)
+        {
+            startTime += Time.deltaTime;
+        }
+        CheckPlayerisFalling();
+
+        #endregion
+    }
+    public void CanShootSet(bool val)
+    {
+        canShoot = val;
+    }
+    public float startTime = 0f, timeEnd = 0.5f;
+    public void ShootFun()
+    {
+        //if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.B))
+        //{
+        if (startTime > timeEnd)
+        {
+            gunScript.ShootBullet(ShootPoint.position, ShootPoint.rotation);
+            startTime = 0;
+        }
+
+
+        //}
     }
     #region PlayerMovements
 
     Vector3 GetInput()
     {
         float h, v;
-        
-        if (isdragged)
+
+        if (MblInputs)
         {
             h = JoyStick.move.x;
             v = JoyStick.move.z;
@@ -156,7 +197,7 @@ public class Player : MonoBehaviour
     void Move(Vector3 move)
     {
         transform.position += transform.forward * move.magnitude * Time.deltaTime * speed;
-  
+
     }
     void Rotation(Vector3 _rotate)
     {
@@ -168,19 +209,16 @@ public class Player : MonoBehaviour
         }
 
     }
-    void Jump()
+    public void Jump()
     {
 
-        bool canJump = Physics.Raycast(transform.position, -transform.up, 0.6f, layerMask);
-        if (Input.GetKeyDown(KeyCode.Space) && canJump)
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-           // print("jumped");
-        }
+
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
     }
-    public void GameInputs(bool _drag)
+    public void GameInputs(bool _MblOrPC)
     {
-        isdragged = _drag;
+        MblInputs = _MblOrPC;
     }
 
     #endregion
@@ -205,7 +243,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (other.tag == "PowerUp")
+        if (other.CompareTag("PowerUp"))
         {
             if (CurrentPowerUpType == PowerType.None)
             {
@@ -235,7 +273,8 @@ public class Player : MonoBehaviour
                 {
                     DoubleCoinsStarted();
                 };
-                TimerEnd = () => {
+                TimerEnd = () =>
+                {
                     DoubleCoinsEnd();
                 };
                 break;
@@ -244,7 +283,8 @@ public class Player : MonoBehaviour
                 {
                     ImmunePowerStart();
                 };
-                TimerEnd = () => {
+                TimerEnd = () =>
+                {
                     ImmunePowerEnd();
                 };
                 break;
@@ -253,7 +293,8 @@ public class Player : MonoBehaviour
                 {
                     AntiGravity_Start();
                 };
-                TimerEnd = () => {
+                TimerEnd = () =>
+                {
                     AntiGravity_End();
                 };
                 break;
@@ -330,20 +371,20 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    
+
     void DisplayHealth(float _health)
     {
         healthScript.DisplayHealth(_health);
     }
-    
-    
+
+
 
 
     #region Coins
-    void ResetScore()
-    {
-      //  GameManager.instance.ResetScore();
-    }
+    //void ResetScore()
+    //{
+    //    //  GameManager.instance.ResetScore();
+    //}
     void AddScore(int _value)
     {
         GameManager.sharedInstance.AddScore(_value);
@@ -368,6 +409,8 @@ public class Player : MonoBehaviour
         transform.position = playerStartPosition;
         rb.useGravity = true;
         GameOver = false;
+        gameWon = false;
+        fallHeight = 0;
     }
     void SoundPlay(string _soundname)
     {
@@ -398,14 +441,14 @@ public class Player : MonoBehaviour
             {
                 airTime += Time.deltaTime;
                 fallHeight = -(airTime * airTime * Physics.gravity.y) / 2f;
-                if(fallHeight > 3f)
+                if (fallHeight > 1f && fallHeight <3f)
                 {
                     FallFromHeight(fallHeight);
                 }
-                
+
                 if (airTime > 1.5)
                 {
-                    //FallFromHeight(0);
+                    FallFromHeight(fallHeight);
                     rb.Sleep();
                 }
             }
@@ -424,7 +467,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    
+
     void CheckPlayerisFalling()
     {
         IsFalling = !Physics.Raycast(transform.position, -transform.up, 0.6f, layerMask);

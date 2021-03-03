@@ -6,13 +6,15 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float playerDamageRate;
     [SerializeField] float enemyDamageRate;
-
+    TurretE turretE;
     Rigidbody rb;
     private void Awake()
     {
+        if (turretE)
+        {
+            enemyDamageRate = FindObjectOfType<EnemyHealth>().enemyDamageRate;
+        }
         playerDamageRate = FindObjectOfType<PlayerHealth>().playerDamageRate;
-        enemyDamageRate = FindObjectOfType<EnemyHealth>().enemyDamageRate;
-        
     }
     private void Start()
     {
@@ -36,7 +38,7 @@ public class Bullet : MonoBehaviour
     }
     private void OnEnable()
     {
-        Invoke("Deactivate", 2f);
+        Invoke("Deactivate", 5f);
     }
     void Deactivate()
     {
